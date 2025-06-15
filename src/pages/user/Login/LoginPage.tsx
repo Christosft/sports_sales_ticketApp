@@ -1,6 +1,8 @@
 import {useEffect} from "react";
+import LoginForm from "../../../components/LoginForm.tsx";
 
 const LoginPage = () => {
+
 
     useEffect(() => {
         document.title = 'Login Page';
@@ -8,7 +10,7 @@ const LoginPage = () => {
 
     return (
         <>
-            <h1 className="text-center">Login Page</h1>
+            <LoginForm />
         </>
     )
 }
