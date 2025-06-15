@@ -1,4 +1,5 @@
 import {useEffect} from "react";
+import RegisterForm from "../../../components/RegisterForm.tsx";
 
 const RegisterPage = () => {
 
@@ -8,7 +9,7 @@ const RegisterPage = () => {
 
     return (
         <>
-            <h1 className="text-center">Register Page</h1>
+            <RegisterForm />
         </>
     )
 }
