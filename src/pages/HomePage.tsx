@@ -5,7 +5,7 @@ const HomePage = () => {
 
     useEffect(() => {
         document.title = 'Index Page';
-    })
+    }, [])
 
 
     return (

@@ -4,8 +4,8 @@ import {useEffect} from "react";
 const LandingPage = () => {
 
     useEffect(() => {
-        document.title = 'Index Page';
-    })
+        document.title = 'Landing Page';
+    }, [])
 
 
     return (

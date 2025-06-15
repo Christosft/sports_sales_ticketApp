@@ -30,9 +30,9 @@ const LandingPageHeader = () => {
                         bg-black`}
                     >
 
-                        <Link to="/" className="block md:inline hover:underline hover:underline-offset-4"
+                        <Link to="/landing/login" className="block md:inline hover:underline hover:underline-offset-4"
                               onClick={() => setMenu(false)}>Login</Link>
-                        <Link to="/" className="block md:inline hover:underline hover:underline-offset-4"
+                        <Link to="/landing/register" className="block md:inline hover:underline hover:underline-offset-4"
                               onClick={() => setMenu(false)}>Register</Link>
                     </nav>
                 </div>
