@@ -1,6 +1,7 @@
 import {z} from "zod";
-import {useState} from "react";
+import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
     email: z.string().trim().nonempty("Email is required").email("Email is invalid"),
@@ -8,11 +9,6 @@ const formSchema = z.object({
 })
 
 type FormValues = z.infer<typeof formSchema>;
-
-type FormErrors = {
-    email?: string,
-    password?: string,
-}
 
 const initialValues = {
     email: "",
@@ -22,63 +18,28 @@ const initialValues = {
 
 const LoginForm = () => {
 
-    const[values, setValues] = useState<FormValues>(initialValues);
-    const[errors, setErrors] = useState<FormErrors | null>(null);
-    const[loginData, setLoginData] = useState<FormValues | null>(null);
-
-    const validateForm = (values: FormValues) => {
-        const errors: FormErrors = {};
-
-        if (!values.email.trim()) {
-            errors.email = "Email is required";
-        }
-
-        if (values.password.length < 8) {
-            errors.password = "Password is required";
-        }
-
-        return errors;
-    };
+    const {
+        register,
+        handleSubmit,
+        formState: {errors},
+        reset,
+    } = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+        defaultValues: initialValues,
+    });
 
     const navigate = useNavigate();
 
-    const handleLogin = (e: React.FormEvent) => {
-        e.preventDefault();
+    const onLogin = (data: FormValues) => {
+        console.log(data);
+        reset();
 
-        const validationErrors = validateForm(values);
-
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
-
-        setLoginData(values);
-        setValues(initialValues);
-        setErrors(null);
 
         navigate("/home")
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const {name, value} = e.target;
-        setValues(
-            (prev => ({
-                ...prev,
-                [name]: value,
-            }))
-        )
-        setErrors(
-            (prev => ({
-                ...prev,
-                [name]: undefined,
-            }))
-        )
-    }
-
-        const handleClear = () => {
-            setValues(initialValues);
-            setErrors(null);
-            setLoginData(null);
+        const onClear = () => {
+            reset();
         }
 
     return (
@@ -86,33 +47,31 @@ const LoginForm = () => {
             <div className="flex max-w-sm mx-auto mt-8">
                 <div>
                     <h1 className="text-4xl font-bold text-amber-200 text-center mb-4">Login</h1>
-                    <form onSubmit={handleLogin} className="space-y-4">
+                    <form onSubmit={handleSubmit(onLogin)} className="space-y-4">
                     <div>
                         <h1 className="font-bold">EMAIL</h1>
                         <input
                             type="email"
-                            name="email"
-                            value={values.email}
+                            {...register("email")}
                             placeholder="Email is required"
-                            onChange={handleChange}
+                            autoComplete="off"
                             className="w-full px-4 py-2 rounded border-3 border-black" />
 
                         {errors?.email && (
-                            <p className="text-red-600">{errors.email}</p>
+                            <p className="text-red-600">{errors.email.message}</p>
                         )}
                     </div>
                     <div>
                         <h1 className="font-bold">PASSWORD</h1>
                         <input
-                        type="password"
-                        name="password"
-                        placeholder="Password is required"
-                        value={values.password}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 rounded border-black border-3" />
+                            type="password"
+                            {...register("password")}
+                            placeholder="Password is required"
+                            className="w-full px-4 py-2 rounded border-black border-3"
+                            autoComplete="off"/>
 
                         {errors?.password && (
-                            <p className="text-red-600">{errors.password}</p>
+                            <p className="text-red-600">{errors.password.message}</p>
                         )}
                     </div>
 
@@ -123,8 +82,8 @@ const LoginForm = () => {
                      </button>
 
                         <button
-                            type="reset"
-                            onClick={handleClear}
+                            type="button"
+                            onClick={onClear}
                             className="bg-black text-white px-4 py-2 rounded ml-5">
                             Clear
                         </button>

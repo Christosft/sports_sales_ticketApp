@@ -1,6 +1,7 @@
 import {z} from "zod";
-import {useState} from "react";
+import {zodResolver} from "@hookform/resolvers/zod";
 import {useNavigate} from "react-router";
+import { useForm } from "react-hook-form";
 
 const formSchema = z.object({
     firstname: z.string().trim().nonempty("firstname is required"),
@@ -14,17 +15,6 @@ const formSchema = z.object({
 })
 
 type FormValues = z.infer<typeof formSchema>;
-
-type FormErrors = {
-    firstname?: string,
-    lastname?: string,
-    email?: string,
-    address?: string,
-    province?: string,
-    city?: string,
-    country?: string,
-    phoneNumber?: string,
-}
 
 const initialValues = {
     firstname: "",
@@ -40,87 +30,28 @@ const initialValues = {
 
 const RegisterForm = () => {
 
-    const[values, setValues] = useState<FormValues>(initialValues);
-    const[errors, setErrors] = useState<FormErrors | null>(null);
-    const[registerData, setRegisterData] = useState<FormValues | null>(null);
-
-    const validateForm = (values: FormValues) => {
-        const errors: FormErrors = {};
-
-        if (!values.firstname.trim()) {
-            errors.firstname = "Email is required";
-        }
-
-        if (!values.lastname.trim()) {
-            errors.lastname = "Email is required";
-        }
-
-        if (!values.email.trim()) {
-            errors.email = "Email is required";
-        }
-
-        if (!values.address.trim()) {
-            errors.address = "Address is required";
-        }
-
-        if (!values.province.trim()) {
-            errors.province = "Province is required";
-        }
-
-        if (!values.city.trim()) {
-            errors.city = "City is required";
-        }
-
-        if (!values.country.trim()) {
-            errors.country = "Country is required";
-        }
-
-        if (!values.phoneNumber.trim()) {
-            errors.phoneNumber = "Phone is required";
-        }
-
-        return errors;
-    };
+    const {
+        register,
+        handleSubmit,
+        formState: {errors},
+        reset,
+    } = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+        defaultValues: initialValues,
+    })
 
     const navigate = useNavigate();
 
-    const handleRegister = (e: React.FormEvent) => {
-        e.preventDefault();
+    const onRegister = (data: FormValues) => {
+        console.log(data);
+        reset();
 
-        const validationErrors = validateForm(values);
-
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
+            navigate("/landing/login")
         }
 
-        setRegisterData(values);
-        setValues(initialValues);
-        setErrors(null);
-
-        navigate("/landing/login")
-    }
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const {name, value} = e.target;
-        setValues(
-            (prev => ({
-                ...prev,
-                [name]: value,
-            }))
-        )
-        setErrors(
-            (prev => ({
-                ...prev,
-                [name]: undefined,
-            }))
-        )
-    }
 
         const handleClear = () => {
-            setValues(initialValues);
-            setErrors(null);
-            setRegisterData(null);
+            reset();
         }
 
     return (
@@ -128,19 +59,18 @@ const RegisterForm = () => {
             <div className="flex max-w-sm mx-auto mt-8">
                 <div>
                     <h1 className="text-4xl font-bold text-amber-200 text-center mb-4">Register</h1>
-                    <form onSubmit={handleRegister} className="space-y-4">
+                    <form onSubmit={handleSubmit(onRegister)} className="space-y-4">
                         <div>
                             <h1 className="font-bold">FIRSTNAME</h1>
                             <input
                                 type="text"
-                                name="firstname"
-                                value={values.firstname}
+                                {...register("firstname")}
                                 placeholder="Firstname is required"
-                                onChange={handleChange}
-                                className="w-full px-4 py-2 rounded border-3 border-black" />
+                                className="w-full px-4 py-2 rounded border-3 border-black"
+                                autoComplete="off"/>
 
                             {errors?.firstname && (
-                                <p className="text-red-600">{errors.firstname}</p>
+                                <p className="text-red-600">{errors.firstname.message}</p>
                             )}
                         </div>
 
@@ -148,14 +78,13 @@ const RegisterForm = () => {
                             <h1 className="font-bold">LASTNAME</h1>
                             <input
                                 type="text"
-                                name="lastname"
-                                value={values.lastname}
+                                {...register("lastname")}
                                 placeholder="Lastname is required"
-                                onChange={handleChange}
+                                autoComplete="off"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
                             {errors?.lastname && (
-                                <p className="text-red-600">{errors.lastname}</p>
+                                <p className="text-red-600">{errors.lastname.message}</p>
                             )}
                         </div>
 
@@ -163,14 +92,13 @@ const RegisterForm = () => {
                         <h1 className="font-bold">EMAIL</h1>
                         <input
                             type="email"
-                            name="email"
-                            value={values.email}
+                            {...register("email")}
                             placeholder="Email is required"
-                            onChange={handleChange}
+                            autoComplete="off"
                             className="w-full px-4 py-2 rounded border-3 border-black" />
 
                         {errors?.email && (
-                            <p className="text-red-600">{errors.email}</p>
+                            <p className="text-red-600">{errors.email.message}</p>
                         )}
                     </div>
 
@@ -178,14 +106,13 @@ const RegisterForm = () => {
                             <h1 className="font-bold">ADDRESS</h1>
                             <input
                                 type="text"
-                                name="address"
-                                value={values.address}
+                                {...register("address")}
                                 placeholder="Address is required"
-                                onChange={handleChange}
+                                autoComplete="off"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
                             {errors?.email && (
-                                <p className="text-red-600">{errors.address}</p>
+                                <p className="text-red-600">{errors.address?.message}</p>
                             )}
                         </div>
 
@@ -193,14 +120,13 @@ const RegisterForm = () => {
                             <h1 className="font-bold">PROVINCE</h1>
                             <input
                                 type="text"
-                                name="province"
-                                value={values.province}
+                                {...register("province")}
                                 placeholder="Province is required"
-                                onChange={handleChange}
+                                autoComplete="off"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
                             {errors?.province && (
-                                <p className="text-red-600">{errors.province}</p>
+                                <p className="text-red-600">{errors.province.message}</p>
                             )}
                         </div>
 
@@ -208,14 +134,13 @@ const RegisterForm = () => {
                             <h1 className="font-bold">CITY</h1>
                             <input
                                 type="text"
-                                name="city"
-                                value={values.city}
+                                {...register("city")}
                                 placeholder="City is required"
-                                onChange={handleChange}
+                                autoComplete="off"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
                             {errors?.city && (
-                                <p className="text-red-600">{errors.city}</p>
+                                <p className="text-red-600">{errors.city.message}</p>
                             )}
                         </div>
 
@@ -223,14 +148,13 @@ const RegisterForm = () => {
                             <h1 className="font-bold">Country</h1>
                             <input
                                 type="text"
-                                name="country"
-                                value={values.country}
+                                {...register("country")}
                                 placeholder="Email is required"
-                                onChange={handleChange}
+                                autoComplete="off"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
                             {errors?.country && (
-                                <p className="text-red-600">{errors.country}</p>
+                                <p className="text-red-600">{errors.country.message}</p>
                             )}
                         </div>
 
@@ -238,14 +162,13 @@ const RegisterForm = () => {
                             <h1 className="font-bold">PHONENUMBER</h1>
                             <input
                                 type="text"
-                                name="phoneNumber"
-                                value={values.phoneNumber}
+                                {...register("phoneNumber")}
                                 placeholder="Phone number is required"
-                                onChange={handleChange}
+                                autoComplete="off"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
                             {errors?.phoneNumber && (
-                                <p className="text-red-600">{errors.phoneNumber}</p>
+                                <p className="text-red-600">{errors.phoneNumber.message}</p>
                             )}
                     </div>
 
@@ -256,7 +179,7 @@ const RegisterForm = () => {
                      </button>
 
                         <button
-                            type="reset"
+                            type="button"
                             onClick={handleClear}
                             className="bg-black text-white px-4 py-2 rounded ml-5">
                             Clear
