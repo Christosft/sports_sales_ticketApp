@@ -34,8 +34,10 @@ const LandingPageHeader = () => {
                               onClick={() => setMenu(false)}>Home</Link>
                         <Link to="/home/events" className="block md:inline hover:underline hover:underline-offset-4"
                               onClick={() => setMenu(false)}>Events</Link>
-                        <Link to="/home/checkout" className="block md:inline hover:underline hover:underline-offset-4"
-                              onClick={() => setMenu(false)}>Checkout</Link>
+                        <Link to="/home/cart" className="block md:inline hover:underline hover:underline-offset-4"
+                              onClick={() => setMenu(false)}>Cart</Link>
+                        <Link to="/home/subscribe" className="block md:inline hover:underline hover:underline-offset-4"
+                              onClick={() => setMenu(false)}>Subscribe</Link>
                         <Link to="/" className="block md:inline hover:underline hover:underline-offset-4"
                               onClick={() => setMenu(false)}>Logout</Link>
                     </nav>

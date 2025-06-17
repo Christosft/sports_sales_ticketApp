@@ -7,12 +7,18 @@ const formSchema = z.object({
     firstname: z.string().trim().nonempty("firstname is required"),
     lastname: z.string().trim().nonempty("lastname is required"),
     email: z.string().trim().nonempty("Email is required").email("Email is invalid"),
+    password: z.string().trim().nonempty("password is required"),
+    confirmPassword: z.string().trim().nonempty("Confirm Password is required"),
     address: z.string().trim().nonempty("address is required"),
     province: z.string().trim().nonempty("province is required"),
     city: z.string().trim().nonempty("city is required"),
     country: z.string().trim().nonempty("country is required"),
     phoneNumber: z.string().trim().nonempty("phone is required"),
 })
+    .refine((data: any) => data.password === data.confirmPassword, {
+        message: `Passwords do not match`,
+        path: ["confirmPassword"]
+    })
 
 type FormValues = z.infer<typeof formSchema>;
 
@@ -20,6 +26,8 @@ const initialValues = {
     firstname: "",
     lastname: "",
     email: "",
+    password: "",
+    confirmPassword: "",
     address: "",
     province: "",
     city: "",
@@ -49,7 +57,6 @@ const RegisterForm = () => {
             navigate("/landing/login")
         }
 
-
         const handleClear = () => {
             reset();
         }
@@ -61,7 +68,7 @@ const RegisterForm = () => {
                     <h1 className="text-4xl font-bold text-amber-200 text-center mb-4">Register</h1>
                     <form onSubmit={handleSubmit(onRegister)} className="space-y-4">
                         <div>
-                            <h1 className="font-bold">FIRSTNAME</h1>
+                            <h1 className="font-bold">Firstname</h1>
                             <input
                                 type="text"
                                 {...register("firstname")}
@@ -75,7 +82,7 @@ const RegisterForm = () => {
                         </div>
 
                         <div>
-                            <h1 className="font-bold">LASTNAME</h1>
+                            <h1 className="font-bold">Lastname</h1>
                             <input
                                 type="text"
                                 {...register("lastname")}
@@ -89,7 +96,7 @@ const RegisterForm = () => {
                         </div>
 
                     <div>
-                        <h1 className="font-bold">EMAIL</h1>
+                        <h1 className="font-bold">Email</h1>
                         <input
                             type="email"
                             {...register("email")}
@@ -103,7 +110,35 @@ const RegisterForm = () => {
                     </div>
 
                         <div>
-                            <h1 className="font-bold">ADDRESS</h1>
+                            <h1 className="font-bold">Password</h1>
+                            <input
+                                type="password"
+                                {...register("password")}
+                                placeholder="password is required"
+                                autoComplete="off"
+                                className="w-full px-4 py-2 rounded border-3 border-black" />
+
+                            {errors?.password && (
+                                <p className="text-red-600">{errors.password.message}</p>
+                            )}
+                        </div>
+
+                        <div>
+                            <h1 className="font-bold">Confirm password</h1>
+                            <input
+                                type="password"
+                                {...register("confirmPassword")}
+                                placeholder="Confirm Password"
+                                autoComplete="off"
+                                className="w-full px-4 py-2 rounded border-3 border-black" />
+
+                            {errors?.confirmPassword && (
+                                <p className="text-red-600">{errors.confirmPassword.message}</p>
+                            )}
+                        </div>
+
+                        <div>
+                            <h1 className="font-bold">Address</h1>
                             <input
                                 type="text"
                                 {...register("address")}
@@ -117,7 +152,7 @@ const RegisterForm = () => {
                         </div>
 
                         <div>
-                            <h1 className="font-bold">PROVINCE</h1>
+                            <h1 className="font-bold">Province</h1>
                             <input
                                 type="text"
                                 {...register("province")}
@@ -131,7 +166,7 @@ const RegisterForm = () => {
                         </div>
 
                         <div>
-                            <h1 className="font-bold">CITY</h1>
+                            <h1 className="font-bold">City</h1>
                             <input
                                 type="text"
                                 {...register("city")}
@@ -149,7 +184,7 @@ const RegisterForm = () => {
                             <input
                                 type="text"
                                 {...register("country")}
-                                placeholder="Email is required"
+                                placeholder="Country is required"
                                 autoComplete="off"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
@@ -159,7 +194,7 @@ const RegisterForm = () => {
                         </div>
 
                         <div>
-                            <h1 className="font-bold">PHONENUMBER</h1>
+                            <h1 className="font-bold">Phone number</h1>
                             <input
                                 type="text"
                                 {...register("phoneNumber")}
