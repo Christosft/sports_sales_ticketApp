@@ -1,5 +1,6 @@
 import LandingPageHeader from "./LandingPageHeader.tsx";
 import {Outlet, useLocation} from "react-router";
+import Footer from "./Footer.tsx";
 
 const LandingPageLayout = ({ children }: {children: React.ReactNode}) => {
 
@@ -17,6 +18,7 @@ const LandingPageLayout = ({ children }: {children: React.ReactNode}) => {
                 {children}
                 <Outlet />
             </div>
+            <Footer />
 
         </>
     )
