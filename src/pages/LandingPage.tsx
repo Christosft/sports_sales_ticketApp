@@ -1,5 +1,4 @@
 import {useEffect} from "react";
-import NewsletterForm from "../components/NewsletterForm.tsx";
 
 
 const LandingPage = () => {
@@ -11,7 +10,7 @@ const LandingPage = () => {
 
     return (
         <>
-            <NewsletterForm />
+
         </>
     )
 }

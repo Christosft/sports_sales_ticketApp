@@ -1,4 +1,5 @@
 import {useEffect} from "react";
+import HomeEntranceVideos from "../components/HomeEntranceVideos.tsx";
 
 
 const HomePage = () => {
@@ -10,6 +11,11 @@ const HomePage = () => {
 
     return (
         <>
+
+            <div>
+            <HomeEntranceVideos />
+            </div>
+
             <h1 className="font-bold text-8xl text-center text-black mt-8 mb-15">SPORT-TICK</h1>
             <div className="flex flex-wrap justify-around text-center mr-30 ml-30">
                 <p className="text-black text-5xl font-bold mb-10">Your ticket for every sport event.</p>

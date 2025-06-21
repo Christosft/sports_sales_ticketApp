@@ -1,4 +1,7 @@
 import {useEffect} from "react";
+import CheckoutForm from "../components/CheckoutForm.tsx";
+
+
 
 const CheckoutPage = () => {
 
@@ -8,8 +11,10 @@ const CheckoutPage = () => {
 
     return (
         <>
-            <h1 className="text-center">Checkout Page</h1>
+                <div className="container mx-auto px-4 border-b border-gray-200">
+                    <CheckoutForm />
+                </div>
         </>
-    )
-}
+    );
+};
 export default CheckoutPage;

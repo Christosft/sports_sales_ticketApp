@@ -16,6 +16,7 @@ const FootballEvents = () => {
                 date: "2024-05-29",
                 location: "Athens Olympic Stadium",
                 availableTickets: 50,
+                price: 100,
             },
             {
                 id: 2,
@@ -23,6 +24,7 @@ const FootballEvents = () => {
                 date: "2024-06-10",
                 location: "Santiago Bernabéu",
                 availableTickets: 50,
+                price: 50,
             },
         ]);
 
@@ -84,6 +86,7 @@ const FootballEvents = () => {
                         <p>Date: {event.date}</p>
                         <p>Location: {event.location}</p>
                         <p>Available Tickets: {event.availableTickets}</p>
+                        <p>Price: {event.price}</p>
 
                         <div className="mt-4 flex justify-end items-center gap-4 mr-4">
                             <p>Selected Tickets: {count}</p>                            <button
