@@ -1,4 +1,8 @@
 import {useEffect} from "react";
+import EventsPageLayout from "../components/EventsPageLayout.tsx";
+import FootballEvents from "../components/FootballEvents.tsx";
+import BasketballEvents from "../components/BasketballEvents.tsx";
+import TennisEvents from "../components/TennisEvents.tsx";
 
 
 const EventsListPage = () => {
@@ -8,9 +12,11 @@ const EventsListPage = () => {
     }, []);
 
     return (
-        <>
-
-        </>
+        <EventsPageLayout>
+                <FootballEvents />
+                <BasketballEvents />
+                <TennisEvents />
+        </EventsPageLayout>
     );
 };
 
