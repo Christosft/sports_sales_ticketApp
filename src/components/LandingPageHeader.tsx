@@ -7,7 +7,7 @@ const LandingPageHeader = () => {
 
     return (
         <>
-            <header className="bg-black">
+            <header className="bg-blue-500">
                 <div className="container mx-auto px-4 flex items-center justify-between">
                     <img
                         className="my-4 h-16"
@@ -27,15 +27,13 @@ const LandingPageHeader = () => {
                         className={`${
                             menu ? "block" : "hidden"
                         } md:flex gap-4  text-white absolute top-28 left-0 w-full md:w-auto md:static p-4 md:p-0
-                        bg-black`}
+                        bg-blue-500`}
                     >
 
                         <Link to="/landing/login" className="block md:inline hover:underline hover:underline-offset-4"
                               onClick={() => setMenu(false)}>Login</Link>
                         <Link to="/landing/register" className="block md:inline hover:underline hover:underline-offset-4"
                               onClick={() => setMenu(false)}>Register</Link>
-                        <Link to="/landing/subscribe" className="block md:inline hover:underline hover:underline-offset-4"
-                              onClick={() => setMenu(false)}>Subscribe</Link>
                     </nav>
                 </div>
             </header>

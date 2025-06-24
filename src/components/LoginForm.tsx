@@ -49,7 +49,7 @@ const LoginForm = () => {
                     <h1 className="text-4xl font-bold text-amber-200 text-center mb-4">Login</h1>
                     <form onSubmit={handleSubmit(onLogin)} className="space-y-4">
                     <div>
-                        <h1 className="font-bold">EMAIL</h1>
+                        <h1 className="font-bold">Email</h1>
                         <input
                             type="email"
                             {...register("email")}
@@ -62,7 +62,7 @@ const LoginForm = () => {
                         )}
                     </div>
                     <div>
-                        <h1 className="font-bold">PASSWORD</h1>
+                        <h1 className="font-bold">Password</h1>
                         <input
                             type="password"
                             {...register("password")}

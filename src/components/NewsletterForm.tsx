@@ -2,6 +2,7 @@ import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
 
 const subscribeSchema = z.object({
     email: z.string().trim().nonempty("email is required").email("Email is invalid"),
@@ -16,6 +17,8 @@ const initialValues = {
 
 const NewsletterForm = () => {
     const [open, setOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const {
         register,
@@ -39,6 +42,8 @@ const NewsletterForm = () => {
         alert("Thank you for subscribing to our account.");
         reset();
         setOpen(false);
+
+        navigate("/home")
     }
 
     if (!open) return null;
@@ -71,7 +76,7 @@ const NewsletterForm = () => {
 
                         <button
                             type="button"
-                            onClick={() => setOpen(false)}
+                            onClick={() => { setOpen(false), navigate("/home")}}
                             className="text-black hover:text-gray-700"
                         >
                             Close

@@ -16,6 +16,7 @@ const TennisEvents = () => {
             date: "2024-07-14",
             location: "Centre Court, London",
             availableTickets: 30,
+            price: 150,
         },
         {
             id: 2,
@@ -23,6 +24,7 @@ const TennisEvents = () => {
             date: "2024-08-20",
             location: "Arthur Ashe Stadium, New York",
             availableTickets: 45,
+            price: 100,
         },
         {
             id: 3,
@@ -30,6 +32,7 @@ const TennisEvents = () => {
             date: "2024-06-30",
             location: "Court Philippe-Chatrier, Paris",
             availableTickets: 35,
+            price: 150,
         },
     ]);
 
@@ -76,6 +79,7 @@ const TennisEvents = () => {
         setTicketCounts((prev) => ({...prev, [eventId]: 0}));
 
         alert(`${count} Tickets added to cart`);
+
     }
 
     return (
@@ -91,6 +95,7 @@ const TennisEvents = () => {
                         <p>Date: {event.date}</p>
                         <p>Location: {event.location}</p>
                         <p>Available Tickets: {event.availableTickets}</p>
+                        <p>Price: {event.price}</p>
 
                         <div className="mt-4 flex justify-end items-center gap-4 mr-4">
                             <p>Selected Tickets: {count}</p>                            <button
