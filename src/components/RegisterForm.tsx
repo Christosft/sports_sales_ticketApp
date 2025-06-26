@@ -67,32 +67,34 @@ const RegisterForm = () => {
                 <div>
                     <h1 className="text-4xl font-bold text-amber-200 text-center mb-4">Register</h1>
                     <form onSubmit={handleSubmit(onRegister)} className="space-y-4">
-                        <div>
-                            <h1 className="font-bold">Firstname</h1>
-                            <input
-                                type="text"
-                                {...register("firstname")}
-                                placeholder="Firstname is required"
-                                className="w-full px-4 py-2 rounded border-3 border-black"
-                                autoComplete="off"/>
+                        <div className="flex items-center gap-x-2">
+                            <div>
+                                <h1 className="font-bold">Firstname</h1>
+                                <input
+                                    type="text"
+                                    {...register("firstname")}
+                                    placeholder="Firstname is required"
+                                    className="w-full px-4 py-2 rounded border-3 border-black"
+                                    autoComplete="off"/>
 
-                            {errors?.firstname && (
-                                <p className="text-red-600">{errors.firstname.message}</p>
-                            )}
-                        </div>
+                                {errors?.firstname && (
+                                    <p className="text-red-600">{errors.firstname.message}</p>
+                                )}
+                            </div>
 
-                        <div>
-                            <h1 className="font-bold">Lastname</h1>
-                            <input
-                                type="text"
-                                {...register("lastname")}
-                                placeholder="Lastname is required"
-                                autoComplete="off"
-                                className="w-full px-4 py-2 rounded border-3 border-black" />
+                            <div>
+                                <h1 className="font-bold">Lastname</h1>
+                                <input
+                                    type="text"
+                                    {...register("lastname")}
+                                    placeholder="Lastname is required"
+                                    autoComplete="off"
+                                    className="w-full px-4 py-2 rounded border-3 border-black" />
 
-                            {errors?.lastname && (
-                                <p className="text-red-600">{errors.lastname.message}</p>
-                            )}
+                                {errors?.lastname && (
+                                    <p className="text-red-600">{errors.lastname.message}</p>
+                                )}
+                            </div>
                         </div>
 
                     <div>
@@ -165,32 +167,34 @@ const RegisterForm = () => {
                             )}
                         </div>
 
-                        <div>
-                            <h1 className="font-bold">City</h1>
-                            <input
-                                type="text"
-                                {...register("city")}
-                                placeholder="City is required"
-                                autoComplete="off"
-                                className="w-full px-4 py-2 rounded border-3 border-black" />
+                        <div className="flex items-center gap-x-2">
+                            <div>
+                                <h1 className="font-bold">City</h1>
+                                <input
+                                    type="text"
+                                    {...register("city")}
+                                    placeholder="City is required"
+                                    autoComplete="off"
+                                    className="w-full px-4 py-2 rounded border-3 border-black" />
 
-                            {errors?.city && (
-                                <p className="text-red-600">{errors.city.message}</p>
-                            )}
-                        </div>
+                                {errors?.city && (
+                                    <p className="text-red-600">{errors.city.message}</p>
+                                )}
+                            </div>
 
-                        <div>
-                            <h1 className="font-bold">Country</h1>
-                            <input
-                                type="text"
-                                {...register("country")}
-                                placeholder="Country is required"
-                                autoComplete="off"
-                                className="w-full px-4 py-2 rounded border-3 border-black" />
+                            <div>
+                                <h1 className="font-bold">Country</h1>
+                                <input
+                                    type="text"
+                                    {...register("country")}
+                                    placeholder="Country is required"
+                                    autoComplete="off"
+                                    className="w-full px-4 py-2 rounded border-3 border-black" />
 
-                            {errors?.country && (
-                                <p className="text-red-600">{errors.country.message}</p>
-                            )}
+                                {errors?.country && (
+                                    <p className="text-red-600">{errors.country.message}</p>
+                                )}
+                            </div>
                         </div>
 
                         <div>

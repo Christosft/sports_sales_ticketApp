@@ -92,6 +92,7 @@ const CheckoutForm = () => {
                                     <p className="text-red-600">{errors.country.message}</p>
                                 )}
                             </div>
+
                             <div className="flex items-center gap-x-2">
                                 <div>
                                     <h1 className="font-bold">Firstname</h1>

@@ -1,4 +1,13 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
+
+type Event = {
+    id: number;
+    name: string;
+    location: string;
+    date: string;
+    availableTickets: number;
+    price: number;
+}
 
 type TicketCounts = {
     [eventId: number]: number;
@@ -7,34 +16,15 @@ type TicketCounts = {
 const BasketballEvents = () => {
 
 
+    const [events, setEvents] = useState<Event[]>([]);
     const [ticketCounts, setTicketCounts] = useState<TicketCounts>({});
 
-    const [events, setEvents] = useState([
-        {
-            id: 1,
-            title: "Panathinaikos vs Olympiacos",
-            date: "2024-06-25",
-            location: "OAKA Arena, Athens",
-            availableTickets: 40,
-            price: 50
-        },
-        {
-            id: 2,
-            title: "LA Lakers vs Golden State Warriors",
-            date: "2024-07-10",
-            location: "Crypto.com Arena, Los Angeles",
-            availableTickets: 60,
-            price: 100,
-        },
-        {
-            id: 3,
-            title: "Milwaukee Bucks vs Boston Celtics",
-            date: "2024-07-15",
-            location: "Fiserv Forum, Milwaukee",
-            availableTickets: 55,
-            price: 120,
-        },
-    ]);
+    useEffect(() => {
+        fetch("http://localhost:3001/events/basketball")
+            .then(res => res.json())
+            .then(data => setEvents(data))
+            .catch(err => console.log("Error fetching events:", err));
+    }, []);
 
     const increaseCount = (eventId: number) => {
         setTicketCounts((prev) => {
@@ -64,22 +54,43 @@ const BasketballEvents = () => {
         setTicketCounts((prev) => ({ ...prev, [eventId]: 0 }))
     };
 
-    const handleAddToCart = (eventId: number) => {
+    const handleAddToCart = async (eventId: number) => {
         const count = ticketCounts[eventId] || 0;
         if (count === 0) return;
 
-        setEvents((prevEvents) =>
-            prevEvents.map((event) =>
-                event.id === eventId
-                    ? {...event, availableTickets: event.availableTickets - count}
-                    : event
-            )
-        );
+        try {
+            const res = await fetch("http://localhost:3001/cart", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    eventId,
+                    quantity: count,
+                })
+            })
 
-        setTicketCounts((prev) => ({...prev, [eventId]: 0}));
+            const data = await res.json();
 
-        alert(`${count} Tickets added to cart`);
-    }
+            if (data.success) {
+
+                setEvents((prevEvents) =>
+                    prevEvents.map((event) =>
+                        event.id === eventId
+                            ? { ...event, availableTickets: event.availableTickets - count }
+                            : event
+                    )
+                );
+                setTicketCounts((prev) => ({ ...prev, [eventId]: 0 }));
+                alert(`${count} Tickets reserved successfully`);
+            } else {
+                alert("Reservation failed: " + (data.message || "unknown error"));
+            }
+        } catch (err) {
+            console.error("Error adding to cart:", err);
+            alert("Something went wrong while reserving tickets.");
+        }
+    };
 
     return (
         <div className="space-y-4">
@@ -90,7 +101,7 @@ const BasketballEvents = () => {
                         key={event.id}
                         className="bg-white text-black rounded-lg shadow-md"
                     >
-                        <h2 className="text-xl font-semibold">{event.title}</h2>
+                        <h2 className="text-xl font-semibold">{event.name}</h2>
                         <p>Date: {event.date}</p>
                         <p>Location: {event.location}</p>
                         <p>Available Tickets: {event.availableTickets}</p>
