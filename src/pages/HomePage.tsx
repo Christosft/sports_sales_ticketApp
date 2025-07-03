@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import HomeEntranceVideos from "../components/HomeEntranceVideos.tsx";
+import HomeEntrancePictures from "../components/HomeEntrancePictures.tsx";
 
 
 const HomePage = () => {
@@ -13,7 +13,7 @@ const HomePage = () => {
         <>
 
             <div>
-            <HomeEntranceVideos />
+            <HomeEntrancePictures />
             </div>
 
             <h1 className="font-bold text-8xl text-center text-black mt-8 mb-15">SPORT-TICK</h1>
