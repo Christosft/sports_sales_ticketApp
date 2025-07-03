@@ -37,14 +37,45 @@ const NewsletterForm = () => {
         return () => clearTimeout(timer);
     }, []);
 
-    const onSubmit = (data: SubscribeValues) => {
-        console.log("Subscribed:", data);
-        alert("Thank you for subscribing to our account.");
-        reset();
-        setOpen(false);
+    const onSubmit = async (data: SubscribeValues) => {
+        try {
+            const response = await fetch("http://localhost:3001/subscribe", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email: data.email })
+            });
 
-        navigate("/home")
-    }
+            const text = await response.text();
+            console.log("Response text:", text);
+
+            let result;
+            try {
+                result = JSON.parse(text);
+            } catch (parseError) {
+                throw new Error("Response is not valid JSON: " + text);
+            }
+
+            if (!response.ok) {
+                throw new Error(result.message || "Server error");
+            }
+
+            alert("Thank you for subscribing. A confirmation email has been sent.");
+            reset();
+            setOpen(false);
+            navigate("/home");
+
+        } catch (err) {
+            if (err instanceof Error) {
+                alert(err.message);
+                console.error("Error:", err.message);
+            } else {
+                alert("An unknown error occurred.");
+                console.error("Unknown error:", err);
+            }
+        }
+    };
 
     if (!open) return null;
 
@@ -76,7 +107,7 @@ const NewsletterForm = () => {
 
                         <button
                             type="button"
-                            onClick={() => { setOpen(false), navigate("/home")}}
+                            onClick={() => { setOpen(false); navigate("/home")}}
                             className="text-black hover:text-gray-700"
                         >
                             Close

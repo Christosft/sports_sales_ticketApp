@@ -30,13 +30,35 @@ const LoginForm = () => {
 
     const navigate = useNavigate();
 
-    const onLogin = (data: FormValues) => {
-        console.log(data);
-        reset();
+    const onLogin = async (data: FormValues) => {
+        try {
+            const response = await fetch("http://localhost:3001/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
 
+            const result = await response.json();
 
-        navigate("/home")
-    }
+            if (!response.ok) {
+                throw new Error(result.message || "Login failed");
+            }
+
+            // Φύλαξε το token στο localStorage
+            localStorage.setItem("token", result.token);
+
+            // Optional: Φύλαξε και στοιχεία χρήστη
+            localStorage.setItem("user", JSON.stringify(result.user));
+
+            alert("Login successful!");
+            reset();
+            navigate("/home");
+        } catch (err: any) {
+            alert(err.message || "Something went wrong.");
+        }
+    };
 
         const onClear = () => {
             reset();
