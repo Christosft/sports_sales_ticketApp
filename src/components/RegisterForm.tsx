@@ -50,12 +50,40 @@ const RegisterForm = () => {
 
     const navigate = useNavigate();
 
-    const onRegister = (data: FormValues) => {
-        console.log(data);
-        reset();
+    const onRegister = async (data: FormValues) => {
+        try {
+            const response = await fetch("http://localhost:3001/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: data.firstname + " " + data.lastname,
+                    email: data.email,
+                    password: data.password,
+                    role: "user",
+                    confirmPassword: data.confirmPassword,
+                    address: data.province,
+                    province: data.province,
+                    city: data.city,
+                    country: data.country,
+                    phoneNumber: data.phoneNumber,
+                })
+            })
 
-            navigate("/landing/login")
+            const result = await response.json();
+
+            if (response.ok) {
+                throw new Error(result.message);
+            }
+
+            alert("Register successfully!");
+            reset();
+            navigate("/landing/login");
+        } catch (err: any) {
+            alert(err.message || "Something went wrong");
         }
+    }
 
         const handleClear = () => {
             reset();

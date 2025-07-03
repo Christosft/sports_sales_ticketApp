@@ -1,9 +1,17 @@
 import { Menu, X} from "lucide-react";
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const LandingPageHeader = () => {
     const [menu, setMenu] = useState(false);
+    const navigate = useNavigate();
+
+    const handleLogout =() => {
+        localStorage.removeItem("token");
+        navigate("/");
+        window.location.reload();
+    }
 
     return (
         <>
@@ -38,8 +46,15 @@ const LandingPageHeader = () => {
                               onClick={() => setMenu(false)}>Cart</Link>
                         <Link to="/home/subscribe" className="block md:inline hover:underline hover:underline-offset-4"
                               onClick={() => setMenu(false)}>Subscribe</Link>
-                        <Link to="/" className="block md:inline hover:underline hover:underline-offset-4"
-                              onClick={() => setMenu(false)}>Logout</Link>
+                        <button
+                            onClick={() => {
+                                setMenu(false);
+                                handleLogout();
+                            }}
+                            className="block md:inline hover:underline hover:underline-offset-4 text-left"
+                        >
+                            Logout
+                        </button>
                     </nav>
                 </div>
             </header>
