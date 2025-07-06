@@ -1,120 +1,148 @@
-Sports Sales Ticket App
-Περιεχόμενα
-Περιγραφή
+# 🏟️ Sports Sales Ticket App
 
-Προαπαιτούμενα
+Ένα πλήρες σύστημα πώλησης εισιτηρίων για αθλητικές εκδηλώσεις. Το frontend είναι υλοποιημένο με **React + TypeScript**, ενώ το backend με **Node.js + Express** και **MySQL**.
 
-Περιγραφή
-Η εφαρμογή αυτή είναι ένα σύστημα πώλησης εισιτηρίων για αθλητικές εκδηλώσεις, με frontend βασισμένο σε React και backend σε Node.js.
+> Το σύνολο του project αναπτύχθηκε, τρέχη και ετέλεσε εξολοκληρρωμένα στο **WebStorm**, της JetBrains.
 
-Προαπαιτούμενα
-Node.js
+---
 
-npm 
+## 🔧 Προαπαιτούμενα
 
-Git
+📅 Πριν ξεκινήσεις, βεβαίωσου ότι έχεις εγκατεστημένα:
 
-Εγκατάσταση
-Κλωνοποίηση του repository:
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+- [Git](https://git-scm.com/)
 
-bash
-Αντιγραφή
-Επεξεργασία
+---
+
+## 🚀 Εγκατάσταση
+
+1. **Κλωνολόγησε το repository:**
+
+```bash
 git clone https://github.com/Christosft/sports_sales_ticketApp.git
 cd sports_sales_ticketApp
-Εγκατάσταση εξαρτήσεων στο backend:
+```
 
-bash
-Αντιγραφή
-Επεξεργασία
+2. **Εγκατάσταση εξαρτήσεων Backend:**
+
+```bash
 cd server
 npm install
-Εγκατάσταση εξαρτήσεων στο frontend:
+```
 
-bash
-Αντιγραφή
-Επεξεργασία
+3. **Εγκατάσταση εξαρτήσεων Frontend:**
+
+```bash
 cd ../client
 npm install
-Build και Run
-Backend (Node.js)
-Από το φάκελο server:
+```
 
-bash
-Αντιγραφή
-Επεξεργασία
+---
+
+## 🏁 Εκκίνηση εφαρμογής
+
+### ✅ Backend (Node.js):
+
+Από τον φάκελο `server`:
+
+- Ανάπτυξη:
+
+```bash
 npm run dev
-ή για παραγωγή:
+```
 
-bash
-Αντιγραφή
-Επεξεργασία
+- Παραγωγή:
+
+```bash
 npm start
-Frontend (React + TypeScript)
-Από το φάκελο client:
+```
 
-bash
-Αντιγραφή
-Επεξεργασία
+### 💻 Frontend (React + TypeScript):
+
+Από τον φάκελο `client`:
+
+- Ανάπτυξη:
+
+```bash
 npm start
-Για build παραγωγής:
+```
 
-bash
-Αντιγραφή
-Επεξεργασία
+- Build για παραγωγή:
+
+```bash
 npm run build
-Git Usage
-Κλωνοποίηση (Clone)
-bash
-Αντιγραφή
-Επεξεργασία
+```
+
+---
+
+## 🔀 Git Workflow
+
+### Κλωνολόγηση:
+
+```bash
 git clone https://github.com/Christosft/sports_sales_ticketApp.git
 cd sports_sales_ticketApp
-Δημιουργία νέου branch
-bash
-Αντιγραφή
-Επεξεργασία
+```
+
+### Δημιουργία νέου branch:
+
+```bash
 git checkout -b feature/nea-leitoyrgia
-Προσθήκη αλλαγών και commit
-bash
-Αντιγραφή
-Επεξεργασία
+```
+
+### Commit και Push αλλαγών:
+
+```bash
 git add .
 git commit -m "Προσθήκη νέας λειτουργίας για τα εισιτήρια"
-Push στο απομακρυσμένο repository
-bash
-Αντιγραφή
-Επεξεργασία
 git push origin feature/nea-leitoyrgia
-Συγχώνευση (merge) branch
-Δημιουργία Pull Request στο GitHub για συγχώνευση στο main.
+```
 
-Μετά την έγκριση, κάνε merge.
+### Merge:
 
-Testing
-Unit Tests (Frontend και Backend)
-Χρησιμοποιήστε το Jest για unit testing.
+1. Δημιουργία **Pull Request** στο GitHub.
+2. Μετά την έγκριση, κάνε merge στο `main`.
 
-Εκτέλεση tests:
+---
 
-bash
-Αντιγραφή
-Επεξεργασία
+## 🧪 Testing
+
+### Unit Tests (Frontend & Backend)
+
+Χρησιμοποιείται το **Jest**.
+
+```bash
 npm test
-Integration Tests με Postman
-Δημιουργήστε collection στο Postman για τα REST APIs.
+```
 
-Εκτελέστε τα tests κατά την ανάπτυξη.
+### Integration Tests με Postman
 
-Deploy
-Backend
-Ανέβασε τον φάκελο server σε κάποιο hosting (π.χ. Heroku, AWS, DigitalOcean).
+- Δημιούργησε collection στο Postman για τα REST APIs.
+- Εκτελείς τα tests κατά τη διάρκεια ανάπτυξης.
 
-Φρόντισε να ορίσεις τις περιβαλλοντικές μεταβλητές.
+---
 
-Frontend
-Κάνε build το frontend (npm run build).
+## 🌐 Deploy
 
-Ανέβασε τον φάκελο build σε static hosting (π.χ. Netlify, Vercel).
+### Backend:
 
-Αν ο backend και frontend είναι σε διαφορετικά domains, ρύθμισε το CORS στο backend.
+- Κάνε upload το φάκελο `server` σε πλατφόρμα όπως:
+  - Heroku
+  - AWS
+  - DigitalOcean
+- Όρισε τις **περιβαλλοντικές μεταβλητές** (.env)
+
+### Frontend:
+
+- Εκτέλεσε build:
+
+```bash
+npm run build
+```
+
+> ⚠️ Αν backend & frontend βρίσκονται σε διαφορετικά domains, φρόντισε να ρυθμίσεις κατάλληλα το **CORS** στο backend.
+
+---
+
