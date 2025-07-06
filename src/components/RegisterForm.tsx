@@ -2,6 +2,7 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useNavigate} from "react-router";
 import { useForm } from "react-hook-form";
+import {useState} from "react";
 
 const formSchema = z.object({
     firstname: z.string().trim().nonempty("firstname is required"),
@@ -50,8 +51,11 @@ const RegisterForm = () => {
 
     const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(false);
+
     const onRegister = async (data: FormValues) => {
         try {
+            setLoading(true);
             const response = await fetch("http://localhost:3001/auth/register", {
                 method: "POST",
                 headers: {
@@ -63,7 +67,7 @@ const RegisterForm = () => {
                     password: data.password,
                     role: "user",
                     confirmPassword: data.confirmPassword,
-                    address: data.province,
+                    address: data.address,
                     province: data.province,
                     city: data.city,
                     country: data.country,
@@ -73,8 +77,8 @@ const RegisterForm = () => {
 
             const result = await response.json();
 
-            if (response.ok) {
-                throw new Error(result.message);
+            if (!response.ok) {
+                throw new Error(result.message || "Registration failed");
             }
 
             alert("Register successfully!");
@@ -83,12 +87,16 @@ const RegisterForm = () => {
         } catch (err: any) {
             alert(err.message || "Something went wrong");
         }
+        finally {
+            setLoading(false);
+        }
     }
 
         const handleClear = () => {
             reset();
         }
 
+    // @ts-ignore
     return (
         <>
             <div className="flex max-w-sm mx-auto mt-8">
@@ -103,7 +111,7 @@ const RegisterForm = () => {
                                     {...register("firstname")}
                                     placeholder="Firstname is required"
                                     className="w-full px-4 py-2 rounded border-3 border-black"
-                                    autoComplete="off"/>
+                                    autoComplete="on"/>
 
                                 {errors?.firstname && (
                                     <p className="text-red-600">{errors.firstname.message}</p>
@@ -116,7 +124,7 @@ const RegisterForm = () => {
                                     type="text"
                                     {...register("lastname")}
                                     placeholder="Lastname is required"
-                                    autoComplete="off"
+                                    autoComplete="on"
                                     className="w-full px-4 py-2 rounded border-3 border-black" />
 
                                 {errors?.lastname && (
@@ -131,7 +139,7 @@ const RegisterForm = () => {
                             type="email"
                             {...register("email")}
                             placeholder="Email is required"
-                            autoComplete="off"
+                            autoComplete="on"
                             className="w-full px-4 py-2 rounded border-3 border-black" />
 
                         {errors?.email && (
@@ -145,7 +153,7 @@ const RegisterForm = () => {
                                 type="password"
                                 {...register("password")}
                                 placeholder="password is required"
-                                autoComplete="off"
+                                autoComplete="on"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
                             {errors?.password && (
@@ -159,7 +167,7 @@ const RegisterForm = () => {
                                 type="password"
                                 {...register("confirmPassword")}
                                 placeholder="Confirm Password"
-                                autoComplete="off"
+                                autoComplete="on"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
                             {errors?.confirmPassword && (
@@ -173,7 +181,7 @@ const RegisterForm = () => {
                                 type="text"
                                 {...register("address")}
                                 placeholder="Address is required"
-                                autoComplete="off"
+                                autoComplete="on"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
                             {errors?.email && (
@@ -187,7 +195,7 @@ const RegisterForm = () => {
                                 type="text"
                                 {...register("province")}
                                 placeholder="Province is required"
-                                autoComplete="off"
+                                autoComplete="on"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
                             {errors?.province && (
@@ -202,7 +210,7 @@ const RegisterForm = () => {
                                     type="text"
                                     {...register("city")}
                                     placeholder="City is required"
-                                    autoComplete="off"
+                                    autoComplete="on"
                                     className="w-full px-4 py-2 rounded border-3 border-black" />
 
                                 {errors?.city && (
@@ -216,7 +224,7 @@ const RegisterForm = () => {
                                     type="text"
                                     {...register("country")}
                                     placeholder="Country is required"
-                                    autoComplete="off"
+                                    autoComplete="on"
                                     className="w-full px-4 py-2 rounded border-3 border-black" />
 
                                 {errors?.country && (
@@ -231,7 +239,7 @@ const RegisterForm = () => {
                                 type="text"
                                 {...register("phoneNumber")}
                                 placeholder="Phone number is required"
-                                autoComplete="off"
+                                autoComplete="on"
                                 className="w-full px-4 py-2 rounded border-3 border-black" />
 
                             {errors?.phoneNumber && (
@@ -241,8 +249,9 @@ const RegisterForm = () => {
 
                      <button
                          type="submit"
-                         className="bg-black text-white px-4 py-2 rounded ml-5">
-                         Submit
+                         className="bg-black text-white px-4 py-2 rounded ml-5"
+                     disabled={loading}>
+                         {loading ? "Submitting..." : "Submit"}
                      </button>
 
                         <button
