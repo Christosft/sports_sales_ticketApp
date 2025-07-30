@@ -20,6 +20,9 @@ app.use('/subscribe', newsLetterRoutes);
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
+const checkoutRoutes = require('./routes/checkout');
+app.use('/checkout', checkoutRoutes);
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 })
