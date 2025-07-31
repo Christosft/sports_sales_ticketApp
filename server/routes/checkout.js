@@ -5,8 +5,7 @@ const db = require("../db");
 router.post('/checkout', async (req, res) => {
     try {
         const [reservedTickets] = await db.query(
-            `SELECT *
-             FROM tickets
+            `SELECT * FROM tickets
              WHERE status = 'reserved'`
         )
 
