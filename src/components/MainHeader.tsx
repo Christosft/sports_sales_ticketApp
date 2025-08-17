@@ -46,6 +46,8 @@ const LandingPageHeader = () => {
                               onClick={() => setMenu(false)}>Cart</Link>
                         <Link to="/home/subscribe" className="block md:inline hover:underline hover:underline-offset-4"
                               onClick={() => setMenu(false)}>Subscribe</Link>
+                        <Link to="/home/user" className="block md:inline hover:underline hover:underline-offset-4"
+                              onClick={() => setMenu(false)}>User</Link>
                         <button
                             onClick={() => {
                                 setMenu(false);

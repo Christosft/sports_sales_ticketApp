@@ -7,6 +7,8 @@ const crypto = require('crypto');
 const nodemailer = require("nodemailer");
 require('dotenv').config();
 
+const authMiddleware = require('../middleware/middleware');
+
 const router = express.Router();
 
 
@@ -142,4 +144,98 @@ router.post('/login', async (req, res) => {
         res.status(500).send({message: 'Server error'});
     }
 })
+
+router.get('/user', authMiddleware, async (req, res) => {
+    try {
+        res.status(200).json(req.user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to get user details' });
+    }
+});
+
+
+router.put('/user', authMiddleware, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const {
+            username,
+            password,
+            confirmPassword,
+            address,
+            province,
+            city,
+            country,
+            phone,
+        } = req.body;
+
+        if (password && password !== confirmPassword) {
+            return res.status(400).json({ message: "Passwords don't match" });
+        }
+
+        let hashedPassword;
+        if (password) {
+            hashedPassword = await bcrypt.hash(password, 12);
+        }
+
+        const fields = [];
+        const values = [];
+
+        if (username) {
+            fields.push('username = ?');
+            values.push(username);
+        }
+        if (hashedPassword) {
+            fields.push('password = ?');
+            values.push(hashedPassword);
+        }
+        if (address) {
+            fields.push('address = ?');
+            values.push(address);
+        }
+        if (province) {
+            fields.push('province = ?');
+            values.push(province);
+        }
+        if (city) {
+            fields.push('city = ?');
+            values.push(city);
+        }
+        if (country) {
+            fields.push('country = ?');
+            values.push(country);
+        }
+        if (phone) {
+            fields.push('phone = ?');
+            values.push(phone);
+        }
+
+        if (fields.length === 0) {
+            return res.status(400).json({ message: 'No data to update' });
+        }
+
+        values.push(userId);
+
+        const sql = `UPDATE users SET ${fields.join(', ')} WHERE id = ?`;
+        const [result] = await db.query(sql, values);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Παίρνουμε τα νέα στοιχεία (χωρίς password)
+        const [rows] = await db.query(
+            'SELECT id, username, email, role, address, province, city, country, phone FROM users WHERE id = ?',
+            [userId]
+        );
+
+        res.status(200).json({
+            message: 'User updated successfully',
+            user: rows[0],
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Failed to update user' });
+    }
+});
 module.exports = router;

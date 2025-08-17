@@ -12,7 +12,9 @@ const CheckoutPage = () => {
     return (
         <>
                 <div className="container mx-auto px-4 border-b border-gray-200">
-                    <CheckoutForm />
+                    <CheckoutForm onCheckoutSuccess={function(): void {
+                    throw new Error("Function not implemented.");
+                } } />
                 </div>
         </>
     );

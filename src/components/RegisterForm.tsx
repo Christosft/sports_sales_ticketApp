@@ -95,8 +95,7 @@ const RegisterForm = () => {
         const handleClear = () => {
             reset();
         }
-
-    // @ts-ignore
+        
     return (
         <>
             <div className="flex max-w-sm mx-auto mt-8">
